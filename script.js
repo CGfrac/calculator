@@ -65,6 +65,21 @@ function clear() {
     updateDisplay(variables.a);
 }
 
+function isDecimal() {
+    if (variables.firstOperand) {
+        return variables.a.includes('.');
+    }
+    return variables.b.includes('.');
+}
+
+function handleOperand(operandValue) {
+    if (variables.firstOperand) {
+        variables.a = updateValue(variables.a, operandValue);
+    } else {
+        variables.b = updateValue(variables.b, operandValue);
+    }
+}
+
 function processButton(event) {
     const button = event.target;
     const content = button.textContent;
@@ -73,12 +88,12 @@ function processButton(event) {
         giveResult();
     } else if (content === 'C') {
         clear();
-    } else if (button.classList.contains('operand')) {
-        if (variables.firstOperand) {
-            variables.a = updateValue(variables.a, content);
-        } else {
-            variables.b = updateValue(variables.b, content);
+    } else if (content === '.') {
+        if (!isDecimal()) {
+            handleOperand(content);
         }
+    } else if (button.classList.contains('operand')) {
+        handleOperand(content);
     } else if (button.classList.contains('operator')) {
         if (variables.firstOperand) {
             variables.firstOperand = false;
