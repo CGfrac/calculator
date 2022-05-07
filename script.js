@@ -144,6 +144,7 @@ function processButton(event) {
             break;
         case '\uD83E\uDC28':
             backspace();
+            break;
         default:
             if (button.classList.contains('operand')) {
                 handleOperand(content);
