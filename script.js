@@ -86,6 +86,20 @@ function handleOperand(operandValue) {
     }
 }
 
+function switchNegativePositive() {
+    let value;
+
+    if (variables.firstOperand) {
+        value = `${+variables.a * -1}`;
+        variables.a = value;
+    } else {
+        value = `${+variables.b * -1}`;
+        variables.b = value;
+    }
+
+    updateDisplay(value);
+}
+
 function processButton(event) {
     const button = event.target;
     const content = button.textContent;
@@ -96,6 +110,8 @@ function processButton(event) {
         clear();
     } else if (content === '.') {
         if (!isDecimal()) handleOperand(content);
+    } else if (content === '+/-') {
+        switchNegativePositive();
     } else if (button.classList.contains('operand')) {
         handleOperand(content);
     } else if (button.classList.contains('operator')) {
