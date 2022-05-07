@@ -174,10 +174,23 @@ function removeBrightness(event) {
     }
 }
 
+function processKeyboardInput(event) {
+    let key = event.key;
+    if (key === 'Enter') key = '=';
+
+    const button = document.querySelector(`div[data-key="${key}"]`);
+
+    if (button !== null) {
+        button.click();
+    }
+}
+
 const display = document.querySelector('#display p');
 const buttons = document.querySelectorAll('.button');
 
 buttons.forEach(button => button.addEventListener('click', processButton));
 buttons.forEach(button => button.addEventListener('transitionend', removeBrightness));
+
+document.addEventListener('keydown', processKeyboardInput);
 
 let variables = new Variables();
