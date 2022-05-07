@@ -35,6 +35,15 @@ body {
     font-weight: bold;
 }
 
+.button {
+    transition: all 0.05s;
+}
+
+.active {
+    transform: scale(1.03);
+    filter: brightness(1.5);
+}
+
 .operand {
     background-color: #D8D4D9;
     color: #153F51;

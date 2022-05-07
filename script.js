@@ -130,6 +130,9 @@ function backspace() {
 
 function processButton(event) {
     const button = event.target;
+
+    button.classList.add('active');
+
     const content = button.textContent;
 
     switch (content) {
@@ -159,9 +162,15 @@ function processButton(event) {
     }
 }
 
+function removeBrightness(event) {
+    const button = event.target;
+    button.classList.remove('active');
+}
+
 const display = document.querySelector('#display p');
 const buttons = document.querySelectorAll('.button');
 
 buttons.forEach(button => button.addEventListener('click', processButton));
+buttons.forEach(button => button.addEventListener('transitionend', removeBrightness));
 
 let variables = new Variables();
