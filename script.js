@@ -98,6 +98,21 @@ function switchNegativePositive() {
     updateDisplay(value);
 }
 
+function deleteLastChar(string) {
+    let newString = string.slice(0, string.length - 1);
+    newString = (newString.length > 0) ? newString : '0';
+    updateDisplay(newString);
+    return newString;
+}
+
+function backspace() {
+    if (variables.firstOperand) {
+        variables.a = deleteLastChar(variables.a);
+    } else {
+        variables.b = deleteLastChar(variables.b);
+    }
+}
+
 function processButton(event) {
     const button = event.target;
     const content = button.textContent;
@@ -110,6 +125,8 @@ function processButton(event) {
         if (!isDecimal()) handleOperand(content);
     } else if (content === '+/-') {
         switchNegativePositive();
+    } else if (content === '\uD83E\uDC28') {
+        backspace();
     } else if (button.classList.contains('operand')) {
         handleOperand(content);
     } else if (button.classList.contains('operator')) {
