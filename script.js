@@ -79,6 +79,9 @@ function giveResult() {
 }
 
 function clear() {
+    if (variables.activeOperatorButton) {
+        variables.activeOperatorButton.classList.remove('active');
+    }
     variables = new Variables();
     updateDisplay(variables.a);
 }
