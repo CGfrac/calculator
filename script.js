@@ -35,6 +35,7 @@ function Variables() {
     this.a = '0';
     this.b = '0';
     this.operator = '';
+    this.activeOperatorButton = null;
     this.firstOperand = true;
 }
 
@@ -70,6 +71,9 @@ function giveResult() {
     variables.a = `${result}`; // We keep it on a to chain operations
     variables.b = '0';
     variables.operator = '';
+
+    variables.activeOperatorButton.classList.remove('active');
+    variables.activeOperatorButton = null;
 }
 
 function clear() {
@@ -158,13 +162,16 @@ function processButton(event) {
                     giveResult();
                 }
                 variables.operator = content;
+                variables.activeOperatorButton = button;
             }
     }
 }
 
 function removeBrightness(event) {
     const button = event.target;
-    button.classList.remove('active');
+    if (button !== variables.activeOperatorButton) {
+        button.classList.remove('active');
+    }
 }
 
 const display = document.querySelector('#display p');
