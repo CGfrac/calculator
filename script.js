@@ -58,6 +58,7 @@ function giveResult() {
     updateDisplay(result);
     variables.a = `${result}`; // We keep it on a to chain operations
     variables.b = '0';
+    variables.operator = '';
 }
 
 function clear() {
@@ -73,6 +74,11 @@ function isDecimal() {
 }
 
 function handleOperand(operandValue) {
+    // If we enter a new operand right after a result, we want a clean state
+    if (variables.operator === '' && !variables.firstOperand) {
+        clear();
+    }
+
     if (variables.firstOperand) {
         variables.a = updateValue(variables.a, operandValue);
     } else {
@@ -85,13 +91,11 @@ function processButton(event) {
     const content = button.textContent;
 
     if (content === '=') {
-        giveResult();
+        if (!variables.firstOperand) giveResult();
     } else if (content === 'C') {
         clear();
     } else if (content === '.') {
-        if (!isDecimal()) {
-            handleOperand(content);
-        }
+        if (!isDecimal()) handleOperand(content);
     } else if (button.classList.contains('operand')) {
         handleOperand(content);
     } else if (button.classList.contains('operator')) {
