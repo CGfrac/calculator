@@ -1,4 +1,5 @@
 const SNARKY_ERROR_MESSAGE = 'lol';
+const DISPLAY_LIMIT = 10;
 
 function add(a, b) {
     return a + b;
@@ -42,7 +43,12 @@ function updateDisplay(value) {
 }
 
 function updateValue(value, newValue) {
-    const updatedValue = (value === '0') ? newValue : value + newValue;
+    let updatedValue = (value === '0') ? newValue : value + newValue;
+    if (updatedValue.length > DISPLAY_LIMIT) {
+        updatedValue = parseFloat(updatedValue)
+                    .toPrecision(DISPLAY_LIMIT)
+                    .toString();
+    }
     updateDisplay(updatedValue);
     return updatedValue;
 }
@@ -50,7 +56,12 @@ function updateValue(value, newValue) {
 function giveResult() {
     if (variables.operator === '') return;
 
-    const result = operate(+variables.a, +variables.b, variables.operator);
+    let result = operate(+variables.a, +variables.b, variables.operator);
+
+    if (result.toString().length > DISPLAY_LIMIT) {
+        result = result.toPrecision(DISPLAY_LIMIT);
+    }
+
     updateDisplay(result);
     variables.a = `${result}`; // We keep it on a to chain operations
     variables.b = '0';
@@ -70,7 +81,7 @@ function isDecimal() {
 }
 
 function handleOperand(operandValue) {
-    // If we enter a new operand right after a result, we want a clean state
+    // If we enter a new operand right after a result or error, we want a clean state
     if (variables.operator === ''
         && !variables.firstOperand
         || variables.a === SNARKY_ERROR_MESSAGE) {
