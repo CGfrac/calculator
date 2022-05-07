@@ -1,3 +1,5 @@
+const SNARKY_ERROR_MESSAGE = 'lol';
+
 function add(a, b) {
     return a + b;
 }
@@ -11,27 +13,21 @@ function multiply(a, b) {
 }
 
 function divide(a, b) {
+    if (b === 0) return SNARKY_ERROR_MESSAGE;
     return a / b;
 }
 
 function operate(a, b, operator) {
-    let result;
-
     switch (operator) {
         case '+':
-            result = add(a, b);
-            break;
+            return add(a, b);
         case '-':
-            result = substract(a, b);
-            break;
+            return substract(a, b);
         case '\xD7':
-            result = multiply(a, b);
-            break;
+            return multiply(a, b);
         case '\xF7':
-            result = divide(a, b);
-            break;
+            return divide(a, b);
     }
-    return result;
 }
 
 function Variables() {
@@ -75,7 +71,9 @@ function isDecimal() {
 
 function handleOperand(operandValue) {
     // If we enter a new operand right after a result, we want a clean state
-    if (variables.operator === '' && !variables.firstOperand) {
+    if (variables.operator === ''
+        && !variables.firstOperand
+        || variables.a === SNARKY_ERROR_MESSAGE) {
         clear();
     }
 
