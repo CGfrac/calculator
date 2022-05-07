@@ -44,6 +44,8 @@ function updateDisplay(value) {
 }
 
 function updateValue(value, newValue) {
+    if (newValue === '.' && isDecimal(value)) return value;
+
     let updatedValue = (value === '0') ? newValue : value + newValue;
 
     if (updatedValue.length > DISPLAY_LIMIT) {
