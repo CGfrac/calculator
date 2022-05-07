@@ -98,7 +98,7 @@ function handleOperand(operandValue) {
 function switchNegativePositive() {
     let value;
 
-    if (variables.firstOperand) {
+    if (variables.firstOperand || variables.operator === '') {
         value = `${+variables.a * -1}`;
         variables.a = value;
     } else {
