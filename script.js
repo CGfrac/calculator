@@ -69,13 +69,11 @@ function giveResult() {
         result = result.toPrecision(DISPLAY_LIMIT);
     }
 
+    clear();
     updateDisplay(result);
-    variables.a = `${result}`; // We keep it on a to chain operations
-    variables.b = '0';
-    variables.operator = '';
 
-    variables.activeOperatorButton.classList.remove('active');
-    variables.activeOperatorButton = null;
+    variables.a = `${result}`; // We keep it on a to chain operations
+    variables.firstOperand = false;
 }
 
 function clear() {
