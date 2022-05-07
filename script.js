@@ -128,25 +128,29 @@ function processButton(event) {
     const button = event.target;
     const content = button.textContent;
 
-    if (content === '=') {
-        if (!variables.firstOperand) giveResult();
-    } else if (content === 'C') {
-        clear();
-    } else if (content === '.') {
-        if (!isDecimal()) handleOperand(content);
-    } else if (content === '+/-') {
-        switchNegativePositive();
-    } else if (content === '\uD83E\uDC28') {
-        backspace();
-    } else if (button.classList.contains('operand')) {
-        handleOperand(content);
-    } else if (button.classList.contains('operator')) {
-        if (variables.firstOperand) {
-            variables.firstOperand = false;
-        } else {
+    switch (content) {
+        case '=':
             giveResult();
-        }
-        variables.operator = content;
+            break;
+        case 'C':
+            clear();
+            break;
+        case '+/-':
+            switchNegativePositive();
+            break;
+        case '\uD83E\uDC28':
+            backspace();
+        default:
+            if (button.classList.contains('operand')) {
+                handleOperand(content);
+            } else if (button.classList.contains('operator')) {
+                if (variables.firstOperand) {
+                    variables.firstOperand = false;
+                } else {
+                    giveResult();
+                }
+                variables.operator = content;
+            }
     }
 }
 
