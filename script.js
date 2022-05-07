@@ -34,6 +34,13 @@ function operate(a, b, operator) {
     return result;
 }
 
+function Variables() {
+    this.a = '0';
+    this.b = '0';
+    this.operator = '';
+    this.firstOperand = true;
+}
+
 function updateDisplay(value) {
     display.textContent = value;
 }
@@ -45,20 +52,17 @@ function updateValue(value, newValue) {
 }
 
 function giveResult() {
-    if (operator === '') return;
+    if (variables.operator === '') return;
 
-    const result = operate(+a, +b, operator);
+    const result = operate(+variables.a, +variables.b, variables.operator);
     updateDisplay(result);
-    a = `${result}`; // We keep it on a to chain operations
-    b = '0';
+    variables.a = `${result}`; // We keep it on a to chain operations
+    variables.b = '0';
 }
 
 function clear() {
-    a = '0';
-    b = '0';
-    operator = '';
-    firstOperand = true;
-    updateDisplay(a);
+    variables = new Variables();
+    updateDisplay(variables.a);
 }
 
 function processButton(event) {
@@ -70,18 +74,18 @@ function processButton(event) {
     } else if (content === 'C') {
         clear();
     } else if (button.classList.contains('operand')) {
-        if (firstOperand) {
-            a = updateValue(a, content);
+        if (variables.firstOperand) {
+            variables.a = updateValue(variables.a, content);
         } else {
-            b = updateValue(b, content);
+            variables.b = updateValue(variables.b, content);
         }
     } else if (button.classList.contains('operator')) {
-        if (firstOperand) {
-            firstOperand = false;
+        if (variables.firstOperand) {
+            variables.firstOperand = false;
         } else {
             giveResult();
         }
-        operator = content;
+        variables.operator = content;
     }
 }
 
@@ -90,7 +94,4 @@ const buttons = document.querySelectorAll('.button');
 
 buttons.forEach(button => button.addEventListener('click', processButton));
 
-let a = '0';
-let b = '0';
-let operator = '';
-let firstOperand = true;
+let variables = new Variables();
