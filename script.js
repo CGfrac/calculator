@@ -44,11 +44,15 @@ function updateDisplay(value) {
 
 function updateValue(value, newValue) {
     let updatedValue = (value === '0') ? newValue : value + newValue;
+
     if (updatedValue.length > DISPLAY_LIMIT) {
         updatedValue = parseFloat(updatedValue)
                     .toPrecision(DISPLAY_LIMIT)
                     .toString();
+    } else if (updatedValue === '.') {
+        updatedValue = '0';
     }
+
     updateDisplay(updatedValue);
     return updatedValue;
 }
