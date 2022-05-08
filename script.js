@@ -53,7 +53,7 @@ function updateValue(value, newValue) {
                     .toPrecision(DISPLAY_LIMIT)
                     .toString();
     } else if (updatedValue === '.') {
-        updatedValue = '0';
+        updatedValue = '0.';
     }
 
     updateDisplay(updatedValue);
