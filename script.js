@@ -106,6 +106,16 @@ function handleOperand(operandValue) {
     }
 }
 
+function handleOperator(operatorValue) {
+    if (variables.firstOperand) {
+        variables.firstOperand = false;
+    } else {
+        giveResult();
+    }
+
+    variables.operator = operatorValue;
+}
+
 function switchNegativePositive() {
     let value;
 
@@ -120,7 +130,7 @@ function switchNegativePositive() {
     updateDisplay(value);
 }
 
-function deleteLastChar(string) {
+function deleteLastDigit(string) {
     let newString = string.slice(0, string.length - 1);
     newString = (newString.length > 0) ? newString : '0';
     updateDisplay(newString);
@@ -129,9 +139,9 @@ function deleteLastChar(string) {
 
 function backspace() {
     if (variables.firstOperand) {
-        variables.a = deleteLastChar(variables.a);
+        variables.a = deleteLastDigit(variables.a);
     } else {
-        variables.b = deleteLastChar(variables.b);
+        variables.b = deleteLastDigit(variables.b);
     }
 }
 
@@ -158,13 +168,8 @@ function processButton(event) {
         default:
             if (button.classList.contains('operand')) {
                 handleOperand(content);
-            } else if (button.classList.contains('operator')) {
-                if (variables.firstOperand) {
-                    variables.firstOperand = false;
-                } else {
-                    giveResult();
-                }
-                variables.operator = content;
+            } else { // Remaining possibility is always an operator
+                handleOperator(content);
                 variables.activeOperatorButton = button;
             }
     }
