@@ -50,9 +50,11 @@ function updateValue(value, newValue) {
 
     if (updatedValue.length > DISPLAY_LIMIT) {
         updatedValue = parseFloat(updatedValue)
-                    .toPrecision(DISPLAY_LIMIT)
+                    .toExponential(DISPLAY_LIMIT / 2)
                     .toString();
-    } else if (updatedValue === '.') {
+    }
+
+    if (updatedValue === '.') {
         updatedValue = '0.';
     }
 
@@ -66,7 +68,7 @@ function giveResult() {
     let result = operate(+variables.a, +variables.b, variables.operator);
 
     if (result.toString().length > DISPLAY_LIMIT) {
-        result = result.toPrecision(DISPLAY_LIMIT);
+        result = result.toExponential(DISPLAY_LIMIT / 2);
     }
 
     clear();
